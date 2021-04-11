@@ -44,12 +44,11 @@ dependencies {
     implementation project(':domain')
 
     // Retrofit dependencies
-    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
-    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
-    implementation "com.squareup.retrofit2:adapter-rxjava3:$retrofit_version"
-    implementation "com.google.code.gson:gson:$gson_version"
-    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
-    api "com.squareup.okhttp3:okhttp:$okhttp_version"
+    api "com.squareup.retrofit2:retrofit:$retrofit_version"
+    api "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    api "com.squareup.retrofit2:adapter-rxjava3:$retrofit_version"
+    api "com.google.code.gson:gson:$gson_version"
+    api "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
 
     // Hilt dependencies
     implementation "com.google.dagger:hilt-android:$hilt_version"
