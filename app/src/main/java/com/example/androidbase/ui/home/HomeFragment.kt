@@ -32,7 +32,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
 
     override fun subscribeToViewModel() {
         with(viewModel) {
-            sampleRecipeLiveData.observe(viewLifecycleOwner) {
+            restaurantFeedLiveData.observe(viewLifecycleOwner) {
                 Timber.d("got the recipe as $it")
 
                 binding.textView.text = when (it) {

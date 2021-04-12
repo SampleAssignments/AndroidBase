@@ -2,6 +2,7 @@ package com.example.data.models
 
 import com.example.domain.model.Location
 import com.example.domain.model.Menu
+import com.example.domain.model.Restaurant
 
 data class StoreResponse(
     val average_rating: Double,
@@ -30,4 +31,23 @@ data class StoreResponse(
     val service_rate: Long?,
     val status: Status,
     val url: String,
-)
+) {
+    fun toRestaurant(): Restaurant {
+        return Restaurant(
+            average_rating = average_rating,
+            business_id = business_id,
+            cover_img_url = cover_img_url,
+            description = description,
+            distance_from_consumer = distance_from_consumer,
+            header_img_url = header_img_url,
+            id = id,
+            location = location,
+            menus = menus,
+            name = name,
+            next_close_time = next_close_time,
+            next_open_time = next_open_time,
+            num_ratings = num_ratings,
+            url = url
+        )
+    }
+}
