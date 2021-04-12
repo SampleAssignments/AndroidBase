@@ -1,5 +1,7 @@
 package com.example.data.di
 
+import com.example.data.CacheSource
+import com.example.data.CacheSourceImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -9,7 +11,7 @@ import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
-object DatabaseModule {
+object DataModule {
     private const val DB_NAME = "sample_db"
     private const val REALM_DB_NAME = "$DB_NAME.realm"
 
@@ -21,4 +23,8 @@ object DatabaseModule {
             .deleteRealmIfMigrationNeeded()
             .build()
     }
+
+    @Singleton
+    @Provides
+    fun providesCacheSource(cacheSourceImpl: CacheSourceImpl): CacheSource = cacheSourceImpl
 }
