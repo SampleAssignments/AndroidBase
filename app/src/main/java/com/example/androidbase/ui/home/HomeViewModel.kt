@@ -9,7 +9,6 @@ import com.example.domain.usecase.GetRecipes
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.kotlin.subscribeBy
-import io.reactivex.rxjava3.schedulers.Schedulers
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -27,7 +26,6 @@ class HomeViewModel @Inject constructor(
 
     private fun fetchSampleRecipes() {
         getRecipes()
-            .subscribeOn(Schedulers.io())
             .subscribeBy(
                 onSuccess = {
                     mutableRecipesLiveData.postValue(it)
