@@ -28,7 +28,11 @@ object NetworkModule {
                 val httpUrl = request.url
 
                 val urlWithApiKey = httpUrl.newBuilder()
-                    .addQueryParameter(QUERY_PARAM_API_KEY, dataConfig.getApiKey())
+                    .apply {
+                        if (dataConfig.getApiKey().isNotEmpty()) {
+                            addQueryParameter(QUERY_PARAM_API_KEY, dataConfig.getApiKey())
+                        }
+                    }
                     .build()
 
                 val newRequest = request.newBuilder().url(urlWithApiKey).build()

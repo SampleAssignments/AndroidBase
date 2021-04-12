@@ -9,6 +9,6 @@ class DataConfigImpl @Inject constructor(): DataConfig {
     }
 
     override fun getBaseUrl(): String {
-        return "" // provides the base url
+        return "https://api.doordash.com/" // provides the base url
     }
 }
