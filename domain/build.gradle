@@ -56,6 +56,11 @@ dependencies {
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
 
+    // Pagination
+    api "androidx.paging:paging-runtime-ktx:$paging_version"
+    // optional - RxJava3 support
+    api "androidx.paging:paging-rxjava3:$paging_version"
+
     testImplementation "junit:junit:$junit_version"
     testImplementation "io.mockk:mockk:$mockk_version"
     testImplementation "org.mockito:mockito-core:$mockito_version"
