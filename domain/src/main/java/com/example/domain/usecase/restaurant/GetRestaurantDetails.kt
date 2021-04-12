@@ -1,4 +1,4 @@
-package com.example.domain.usecase
+package com.example.domain.usecase.restaurant
 
 import com.example.domain.model.Restaurant
 import com.example.domain.repository.RestaurantRepository
