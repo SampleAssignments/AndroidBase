@@ -6,6 +6,7 @@ import androidx.fragment.app.viewModels
 import com.example.androidbase.R
 import com.example.androidbase.databinding.FragmentHomeBinding
 import com.example.androidbase.ui.BaseFragment
+import com.example.domain.model.Result
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -33,7 +34,18 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
         with(viewModel) {
             sampleRecipeLiveData.observe(viewLifecycleOwner) {
                 Timber.d("got the recipe as $it")
-                binding.textView.text = it.toString()
+
+                binding.textView.text = when (it) {
+                    is Result.Error -> {
+                        "Unable to load data"
+                    }
+                    Result.Loading -> {
+                        "Loading data"
+                    }
+                    is Result.Success -> {
+                        it.data.toString()
+                    }
+                }
             }
         }
     }

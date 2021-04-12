@@ -1,15 +1,14 @@
 package com.example.androidbase.ui.home
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.LiveDataReactiveStreams
-import androidx.lifecycle.MutableLiveData
 import com.example.androidbase.BaseViewModel
 import com.example.domain.model.RecipeResponse
+import com.example.domain.model.Result
 import com.example.domain.usecase.GetRecipes
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.reactivex.rxjava3.kotlin.addTo
-import io.reactivex.rxjava3.kotlin.subscribeBy
-import timber.log.Timber
+import io.reactivex.rxjava3.core.Flowable
+import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.functions.Function
 import javax.inject.Inject
 
 @HiltViewModel
@@ -17,25 +16,16 @@ class HomeViewModel @Inject constructor(
     private val getRecipes: GetRecipes
 ) : BaseViewModel() {
 
-    init {
-        fetchSampleRecipes()
-    }
+    val sampleRecipeLiveData = LiveDataReactiveStreams.fromPublisher(recipeFlowable)
 
-    private val mutableRecipesLiveData = MutableLiveData<RecipeResponse>()
-    val recipesLiveData: LiveData<RecipeResponse> = mutableRecipesLiveData
-
-    private fun fetchSampleRecipes() {
-        getRecipes()
-            .subscribeBy(
-                onSuccess = {
-                    mutableRecipesLiveData.postValue(it)
-                },
-                onError = {
-                    Timber.e("unable to fetch data")
-                }
-            )
-            .addTo(compositeDisposable)
-    }
-
-    val sampleRecipeLiveData = LiveDataReactiveStreams.fromPublisher(getRecipes().toFlowable())
+    private val recipeFlowable: Flowable<Result<RecipeResponse>>
+        get() = getRecipes()
+            .map(Function<RecipeResponse, Result<RecipeResponse>> {
+                Result.Success(it)
+            })
+            .onErrorReturn {
+                Result.Error(it)
+            }
+            .toFlowable()
+            .startWith(Single.just(Result.Loading))
 }
