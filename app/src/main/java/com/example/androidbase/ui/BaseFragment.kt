@@ -6,7 +6,7 @@ import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
 
 interface ViewModelContract {
-
+    // this method will be called in onViewCreated, where you can observe to all viewModel liveData objects.
     fun subscribeToViewModel()
 }
 

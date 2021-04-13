@@ -5,6 +5,7 @@ import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,12 +27,11 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
     private val viewModel: HomeViewModel by viewModels()
 
     private var _binding: FragmentHomeBinding? = null
-    private val binding: FragmentHomeBinding
+    private val binding: FragmentHomeBinding // this is only valid between onViewCreated and OnCreateView
         get() = _binding!!
 
     private lateinit var storeFeedAdapter: StoreFeedAdapter
 
-    @ExperimentalCoroutinesApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentHomeBinding.bind(view)
@@ -49,10 +49,15 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
 
     private fun initAdapter() {
         val glide = GlideApp.with(this)
-        storeFeedAdapter = StoreFeedAdapter(glide, object : StoreFeedAdapter.OnRestaurantClickListener {
+        storeFeedAdapter =
+            StoreFeedAdapter(glide, object : StoreFeedAdapter.OnRestaurantClickListener {
                 override fun onRestaurantSelected(restaurant: Restaurant) {
                     Timber.d("selected restaurant is $restaurant")
-                    // navigate to details screen.
+                    findNavController().navigate(
+                        HomeFragmentDirections.actionHomeFragmentToRestaurantDetailFragment(
+                            restaurant.id.toString()
+                        )
+                    )
                 }
             })
         binding.restaurantList.adapter = storeFeedAdapter

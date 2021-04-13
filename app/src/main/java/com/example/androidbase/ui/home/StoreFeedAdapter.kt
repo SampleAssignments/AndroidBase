@@ -9,6 +9,12 @@ import com.example.androidbase.GlideRequests
 import com.example.androidbase.databinding.ItemRestaurantBinding
 import com.example.domain.model.Restaurant
 
+/**
+ * Responsible for loading the feed of restaurants on the home page.
+ *
+ * @param glide is used loading images into the views
+ * @param onRestaurantClickListener is used for sending the click events to whoever is interested with the restaurant id.
+ */
 class StoreFeedAdapter(
     private val glide: GlideRequests,
     private val onRestaurantClickListener: OnRestaurantClickListener
@@ -46,14 +52,11 @@ class StoreFeedAdapter(
             with(binding) {
                 businessName.text = restaurant.name
                 description.text = restaurant.description
-                if (restaurant.distance_from_consumer >= 0.0) {
-                    distance.text = restaurant.distance_from_consumer.toString()
-                }
 
                 glide.load(restaurant.cover_img_url)
-                    .centerCrop()
+                    .fitCenter()
                     .placeholder(android.R.drawable.ic_menu_camera)
-                    .into(imageView)
+                    .into(foodImageView)
             }
         }
     }

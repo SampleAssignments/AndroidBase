@@ -9,5 +9,18 @@
         android:id="@+id/homeFragment"
         android:name="com.example.androidbase.ui.home.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_restaurantDetailFragment"
+            app:destination="@id/restaurantDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/restaurantDetailFragment"
+        android:name="com.example.androidbase.ui.restaurant_info.RestaurantDetailFragment"
+        android:label="fragment_restaurant_detail"
+        tools:layout="@layout/fragment_restaurant_detail" >
+        <argument
+            android:name="businessId"
+            app:argType="string" />
+    </fragment>
 </navigation>
