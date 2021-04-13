@@ -8,14 +8,17 @@ import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.androidbase.GlideApp
 import com.example.androidbase.R
 import com.example.androidbase.databinding.FragmentHomeBinding
 import com.example.androidbase.ui.BaseFragment
 import com.example.domain.model.Location
+import com.example.domain.model.Restaurant
 import com.example.domain.model.Result
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collectLatest
+import timber.log.Timber
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment(R.layout.fragment_home) {
@@ -26,7 +29,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
     private val binding: FragmentHomeBinding
         get() = _binding!!
 
-    private val storeFeedAdapter = StoreFeedAdapter()
+    private lateinit var storeFeedAdapter: StoreFeedAdapter
 
     @ExperimentalCoroutinesApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -45,6 +48,13 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
     }
 
     private fun initAdapter() {
+        val glide = GlideApp.with(this)
+        storeFeedAdapter = StoreFeedAdapter(glide, object : StoreFeedAdapter.OnRestaurantClickListener {
+                override fun onRestaurantSelected(restaurant: Restaurant) {
+                    Timber.d("selected restaurant is $restaurant")
+                    // navigate to details screen.
+                }
+            })
         binding.restaurantList.adapter = storeFeedAdapter
         binding.restaurantList.layoutManager = LinearLayoutManager(context)
 
