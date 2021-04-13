@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">DoorDashLite</string>
     <string name="hello_blank_fragment">Hello there!</string>
+    <string name="generic_loading">Loading…</string>
+    <string name="generic_retry">Retry</string>
+    <string name="generic_no_results">No results to show.</string>
 </resources>
